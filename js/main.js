@@ -5,6 +5,41 @@ document.addEventListener('DOMContentLoaded',function(){
 	loop.volume = 0;
 	let crossfaded = false;
 	let loopFadingOut = false;
+
+	let startPromptEl = null;
+	const createStartPrompt = ()=>{
+		if (startPromptEl) return;
+		const el = document.createElement('div');
+		el.id = 'startPrompt';
+		el.textContent = 'Click to login....';
+		el.style.position = 'fixed';
+		el.style.left = '50%';
+		el.style.top = '50%';
+		el.style.transform = 'translate(-50%,-50%)';
+		el.style.padding = '12px 20px';
+		el.style.background = 'rgba(0,0,0,0.75)';
+		el.style.color = 'white';
+		el.style.fontFamily = 'VT323, monospace, sans-serif';
+		el.style.fontSize = '20px';
+		el.style.borderRadius = '6px';
+		el.style.zIndex = '10000';
+		el.style.cursor = 'pointer';
+		document.body.appendChild(el);
+		startPromptEl = el;
+		const removeOnce = ()=>{
+			if (startPromptEl){
+				try{ startPromptEl.remove(); }catch(e){}
+				startPromptEl = null;
+			}
+		};
+		el.addEventListener('click', removeOnce, { once:true });
+	};
+	const removeStartPrompt = ()=>{
+		if (!startPromptEl) return;
+		try{ startPromptEl.remove(); }catch(e){}
+		startPromptEl = null;
+	};
+
 	const getFadeDurations = ()=>{
 		const ld = Number.isFinite(loop.duration) ? loop.duration : NaN;
 		const sd = Number.isFinite(startup.duration) ? startup.duration : NaN;
@@ -83,6 +118,7 @@ document.addEventListener('DOMContentLoaded',function(){
 			primePools();
 			startup.play().catch(()=>{});
 			primeLoop();
+			removeStartPrompt();
 			window.removeEventListener('click', unlock);
 			window.removeEventListener('keydown', unlock);
 		};
@@ -563,8 +599,7 @@ document.addEventListener('DOMContentLoaded',function(){
 		}
 	};
 
-	startup.addEventListener('play', ()=>{ primePools(); }, { once:true });
-
+	startup.addEventListener('play', ()=>{ removeStartPrompt(); }, { once:true });
 	const startTypewriter = ()=>{
 		if (!overlayEl || typewriterStarted) return;
 		typewriterStarted = true;
@@ -638,4 +673,5 @@ document.addEventListener('DOMContentLoaded',function(){
 		startTypewriter();
 		if (!crossfaded) crossfade();
 	}, { once:true });
+	createStartPrompt();
 });
