@@ -111,6 +111,75 @@ document.addEventListener('DOMContentLoaded',function(){
 		visibleSpan.setAttribute('data-visible','');
 	}
 
+	let navHintEl = null;
+	let navHintLoop = false;
+	let navHintTimers = [];
+
+	const createNavHint = ()=>{
+		if (navHintEl) return;
+		const container = document.getElementById('screen') || document.body;
+		const el = document.createElement('div');
+		el.id = 'navHint';
+		el.textContent = 'Arrow keys to navigate, Enter to select';
+		el.style.position = 'fixed';
+		el.style.left = '50%';
+		el.style.transform = 'translateX(-50%)';
+		el.style.bottom = '18px';
+		el.style.padding = '6px 12px';
+		el.style.background = 'rgba(0,0,0,0.6)';
+		el.style.color = 'white';
+		el.style.fontFamily = 'VT323, monospace, sans-serif';
+		el.style.fontSize = '16px';
+		el.style.borderRadius = '4px';
+		el.style.opacity = '0';
+		el.style.pointerEvents = 'none';
+		el.style.zIndex = '9999';
+		container.appendChild(el);
+		navHintEl = el;
+	};
+
+	const rafFade = (el, from, to, dur, done)=>{
+		const start = performance.now();
+		const step = (now)=>{
+			const t = Math.min(1, (now - start) / dur);
+			el.style.opacity = String(from + (to - from) * t);
+			if (t < 1) requestAnimationFrame(step); else if (done) done();
+		};
+		requestAnimationFrame(step);
+	};
+
+	const startNavHint = ()=>{
+		if (navHintLoop) return;
+		createNavHint();
+		navHintLoop = true;
+		const loopFn = ()=>{
+			if (!navHintLoop || !navHintEl) return;
+			rafFade(navHintEl, 0, 1, 600, ()=>{
+				navHintTimers.push(setTimeout(()=>{
+					if (!navHintLoop || !navHintEl) return;
+					rafFade(navHintEl, 1, 0, 600, ()=>{
+						navHintTimers.push(setTimeout(()=>{
+							loopFn();
+						}, 600));
+					});
+				}, 2000));
+			});
+		};
+		loopFn();
+	};
+
+	const stopNavHint = ()=>{
+		navHintLoop = false;
+		for (let i = 0; i < navHintTimers.length; i++) clearTimeout(navHintTimers[i]);
+		navHintTimers = [];
+		if (navHintEl){
+			rafFade(navHintEl, Number(navHintEl.style.opacity) || 1, 0, 300, ()=>{
+				try{ navHintEl.remove(); }catch(e){}
+				navHintEl = null;
+			});
+		}
+	};
+
 	const terminalEl = document.getElementById('terminal');
 
 	const wait = (ms)=> new Promise((res)=> setTimeout(res, ms));
@@ -189,7 +258,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	const files = [
 		{ id: 1, name: "KLua < Foundation Log >", locked: true },
 		{ id: 2, name: "███████ Lua < Chaos Insurgency File >", locked: true },
-		{ id: 3, name: "████████ Blua< GOC Personel File >", locked: false }
+		{ id: 3, name: "████████ Blua < GOC Personel File >", locked: false }
 	];
 	let selectedIndex = 0;
 
@@ -411,6 +480,7 @@ document.addEventListener('DOMContentLoaded',function(){
 		consoleSequenceStarted = true;
 		terminalEl.innerHTML = '';
 		await renderFileList();
+		startNavHint();
 		const handleKeydown = async (e)=>{
 			if (e.key === 'ArrowUp'){
 				e.preventDefault();
@@ -434,6 +504,7 @@ document.addEventListener('DOMContentLoaded',function(){
 					showDeniedOverlay();
 					return;
 				}
+				stopNavHint();
 				window.removeEventListener('keydown', handleKeydown);
 				await wait(300);
 				const data = await loadGOCData();
