@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>SCIP</title>
+	<link rel="stylesheet" href="styles/theme.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div id="screen">
+		<div class="overlay-text vt323-regular" data-text="SCIP">
+			<span class="visible-text" data-visible=""></span>
+		</div>
+		<div id="terminal" class="console" aria-live="polite" role="region"></div>
+		<div id="deniedOverlay" class="denied-overlay" aria-hidden="true">Access Denied</div>
+		<div class="layer scanlines" role="img" aria-hidden="true"></div>
+		<img class="layer bezel" src="resources/ui/bezel.png" alt="">
+	</div>
+	<audio id="startupAudio" src="resources/sounds/startup.m4a" preload="auto" style="display:none"></audio>
+	<audio id="loopAudio" src="resources/sounds/loop.m4a" preload="auto" style="display:none"></audio>
+	<script src="data/goc.js" defer></script>
+	<script src="js/elementhandler.js" defer></script>
+	<script src="js/elements/text.js" defer></script>
+	<script src="js/elements/attachment.js" defer></script>
+	<script src="js/elements/popupmenu.js" defer></script>
+	<script src="js/main.js" defer></script>
+</body>
+</html>
