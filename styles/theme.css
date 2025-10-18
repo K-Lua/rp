@@ -9,7 +9,7 @@ html,body{
 	padding:0;
 	background:var(--bg);
 	color:var(--text);
-	font-family:system-ui,Arial,sans-serif;
+	font-family:"VT323", monospace;
 }
 .app{
 	min-height:100vh;
@@ -223,19 +223,14 @@ html,body{
 	animation:chromaB 6s infinite;
 }
 .overlay-text .visible-text::marker{
-	/* not used; marker reserved */
 }
 .overlay-text .visible-text::selection{
-	/* no selection styling */
 }
 .overlay-text .visible-text::after{
-	/* keep chromaB; add a faint blurred highlight via an extra layered shadow on the element itself */
 }
 .overlay-text .visible-text::after{
-	/* already chromaB; add no-op to let chromaB remain */
 }
 .overlay-text .visible-text .sheen{
-	/* nothing; kept for future expandability */
 }
 @keyframes scrollDown{
 	0%{ background-position:0 0 }
@@ -295,13 +290,11 @@ html,body{
 	line-height:1.4;
 	white-space:pre-wrap;
 }
-/* apply VT323 to file labels to match SCIP text */
 .console .file-item .label{
 	border-bottom:2px solid transparent;
 	padding-bottom:0.08rem;
 	font-family:"VT323", monospace;
 }
-/* ensure selected underline is white (override any later rules) */
 .console .file-item.selected .label {
 	border-bottom-color: #ffffff !important;
 }
@@ -475,7 +468,6 @@ html,body{
 	scrollbar-width: thin;
 	scrollbar-color: #ffffff transparent;
 }
-/* WebKit browsers: plain square thumb, no rounded corners, hide arrows */
 .popup-wrap::-webkit-scrollbar{
 	width:12px;
 	height:12px;
@@ -505,4 +497,8 @@ html,body{
 .attachment-media{
 	position:relative;
 	display:inline-block;
+}
+
+:where(html, body, #screen, .app, .app-header, .console, .attachment-box, .attachment-popup, .attachment-label, .attachment-caption, .attachment-close, .vt323-regular){
+	font-family:"VT323", monospace !important;
 }
