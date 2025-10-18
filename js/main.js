@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	primeLoop();
 	startup.play().catch(attachUnlock);
 
-	const typeSoundSrcs = ['resources/sounds/type.m4a'];
+	const typeSoundSrcs = [];
 	let typewriterStarted = false;
 	let typewriterScheduled = false;
 	const overlayEl = document.querySelector('.overlay-text');
@@ -211,9 +211,11 @@ document.addEventListener('DOMContentLoaded',function(){
 		ul.className = 'file-list';
 		terminalEl.appendChild(ul);
 
-		const typeAudio = new Audio(typeSoundSrcs[0]);
-		typeAudio.preload = 'auto';
-		typeAudio.volume = 0.85;
+		const typeAudio = typeSoundSrcs[0] ? new Audio(typeSoundSrcs[0]) : null;
+		if (typeAudio){
+			typeAudio.preload = 'auto';
+			typeAudio.volume = 0.85;
+		}
 
 		const items = files.map((f, idx)=>{
 			const li = document.createElement('li');
@@ -241,7 +243,9 @@ document.addEventListener('DOMContentLoaded',function(){
 				}
 			}
 			if (!progressed) break;
-			try{ typeAudio.currentTime = 0; typeAudio.play().catch(()=>{}); }catch(e){}
+			if (typeAudio){
+				try{ typeAudio.currentTime = 0; typeAudio.play().catch(()=>{}); }catch(e){}
+			}
 			await new Promise((res)=> setTimeout(res, tickDelay));
 		}
 		await new Promise((res)=> setTimeout(res, 200));
@@ -442,6 +446,14 @@ document.addEventListener('DOMContentLoaded',function(){
 	};
 
 	const makePool = (src, count)=>{
+		if (!src){
+			return {
+				play(){
+					return { audio: null, promise: Promise.resolve() };
+				},
+				elements: []
+			};
+		}
 		const els = [];
 		for (let i = 0; i < count; i++){
 			const a = new Audio(src);
