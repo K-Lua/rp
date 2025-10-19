@@ -110,10 +110,10 @@ window.__goc_data = `<text>"GOC Personel File."</text>
 <text>"-"</text>
 <text_typewritter>50,70,)"[END OF FOOTAGE]"</text_typewritter>
 <text>"-"</text>
-<text_typewritter>200,300,)"SCP-096 was airlifted from ███████. At ██:██ the helicopter went radio silent."</text_typewritter>
+<text_typewritter>50,70,)"SCP-096 was airlifted from ███████. At ██:██ the helicopter went radio silent."</text_typewritter>
 <text>"-"</text>
-<text_typewritter>200,300,)"At the crash site several ████'s were found to be █████. Recovery tea-- color("200,0,0"," Further Data has been expunged.")"</text_typewritter>
+<text_typewritter>50,70,)"At the crash site several ████'s were found to be █████. Recovery tea-- color("200,0,0"," Further Data has been expunged.")"</text_typewritter>
 <text>"-"</text>
-<text_typewritter>200,300,)"[END OF MISSION LOG: 096-23]"</text_typewritter>
+<text_typewritter>50,70,)"[END OF MISSION LOG: 096-23]"</text_typewritter>
 }, true)
 `;
