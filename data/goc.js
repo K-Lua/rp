@@ -1,6 +1,6 @@
 window.__goc_data = `<text>"GOC Personel File."</text>
 <text>" "</text>
-<text_typewritter>(80,100,)"WARNING CLEARENCE LEVEL: color("200,0,0"," 4")"</text_typewritter>
+<text_typewritter>(80,100,)"WARNING CLEARANCE LEVEL: color("200,0,0"," 4")"</text_typewritter>
 <text>" "</text>
 <text>"Subject ID: B-2910"</text>
 <text_typewritter>(80,100,)"Name: ██████ Blua"</text_typewritter>
