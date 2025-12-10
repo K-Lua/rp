@@ -1,4 +1,4 @@
-window.__goc_data = `<text>"GOC Personel File."</text>
+window.__goc_data = `<text>"GOC Personnel File."</text>
 <text>" "</text>
 <text_typewritter>(80,100,)"WARNING CLEARANCE LEVEL: color("200,0,0"," 4")"</text_typewritter>
 <text>" "</text>
